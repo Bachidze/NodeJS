@@ -1,3 +1,51 @@
+// ფრომისი იწერება როცა ზუსტად არვიცით შესრულდება თუ არა ესა თუ ის ლგიკა
+// ფენდინგის პერიოდი რა დროშიც უნდა შესრულდეს ფრომისი
+// ფულფილდის ქეისი - ანუ შესრულდა
+// რეჯექთი
+
+// all - არაქვს მნიშვნელობა თაიმაუთს მაინც ერთნაირად გვიბრუნებს პასუხს, ერთის რეჯექთზე ყველა ღეჯექთდება
+// race - რმელიც პირველი ჩარენდერდება იმას დააბრუნებს
+const myPromise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("Resolved First Promise");
+    }, 2000);
+  });
+  
+  const secondPromise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("secondPromise");
+    }, 1000);
+  });
+  
+  const fetchDataFromAPI = () =>
+    new Promise((resolve, reject) => {
+      fetch("https://jsonplaceholder.typicode.com/users")
+        .then((response) => response.json())
+        .then((result) => resolve(result))
+        .catch((error) => reject(error));
+    });
+  
+/*   Promise.all([myPromise, secondPromise, fetchDataFromAPI()]).then(([promise1, promise2, fetchedData]) => {
+    console.log(promise1);
+    console.log(promise2);
+    console.log(fetchedData);
+  }).catch(er => {
+    console.log(er ,'error')
+  }) */
+  
+
+  Promise.race([myPromise,secondPromise,fetchDataFromAPI()]).then(res => {
+    console.log(res)
+  }).catch(er => {
+    console.log(er,'error')
+  })
+
+
+
+
+
+
+
 /* const myPrmise = new Promise((resolve, reject) => {
   setTimeout(() => {
     resolve("bachi");
@@ -17,9 +65,6 @@ Promise.allSettled([myPrmise,secondPromise]).then(res => {
 })
  */
 
-
-
-
 /* const first = new Promise((res,rej) => {
     setTimeout(() => {
         rej(10)
@@ -36,7 +81,6 @@ Promise.any([first,second]).then(res => {
     console.log(res)
 }) */
 
-
 /* const sleep = (sec) => {
     return new Promise(res => {
         setTimeout(() => {
@@ -47,8 +91,7 @@ Promise.any([first,second]).then(res => {
 
 async */
 
-
-function a(){
+/* function a(){
     console.log('first function')
     b()
 }
@@ -69,9 +112,7 @@ async function main(){
     console.log(first)
     sleep()
     console.log(first)
-}
-
-
+} */
 
 /* Promise.all([first,second]).then(([gio,bachi]) => {
     const plus = gio + bachi
@@ -79,13 +120,9 @@ async function main(){
 })
  */
 
-
-
-
 /* Promise.any([myPrmise,secondPromise,fetchData()]).then(res => {
     console.log(res)
 }) */
-
 
 /* const fetchData = () => new Promise((res, rej) => [
     fetch("https://jsonplaceholder.typicode.com/users")
@@ -93,14 +130,10 @@ async function main(){
     .then((result) => res(result)),
 ]); */
 
-
-
 /* Promise.race([myPrmise,secondPromise,fetchData()]).then(res => {
     console.log(res)
 })
  */
-
-
 
 /* Promise.all([myPrmise, secondPromise,fetchData()]).then(([promise1, promise2,fetchdata]) => {
   console.log(promise1, "1");
